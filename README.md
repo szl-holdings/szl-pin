@@ -40,7 +40,7 @@ rather than being collapsed into an apparently clean diff.
 
 ## Historical evidence boundary
 
-`receipts/2026-09-05T00:51Z-alignment-sweep-1.json` is preserved as a historical,
+`receipts/2026-09-05T0051Z-alignment-sweep-1.json` is preserved as a historical,
 explicitly partial census artifact. It is not a `szl.estate-pin/v1` head pin and
 must not be passed to `pin_diff` or represented as a complete current estate
 snapshot.
