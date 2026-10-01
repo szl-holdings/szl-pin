@@ -1,6 +1,6 @@
 # szl-pin
 
-[![PyPI](https://img.shields.io/pypi/v/szl-pin)](https://pypi.org/project/szl-pin/) [![Python](https://img.shields.io/pypi/pyversions/szl-pin)](https://pypi.org/project/szl-pin/)
+[![PyPI](https://img.shields.io/pypi/v/szl-pin)](https://pypi.org/project/szl-pin/) [![Python](https://img.shields.io/pypi/pyversions/szl-pin)](https://pypi.org/project/szl-pin/) [![OpenSSF Scorecard](https://api.scorecard.dev/projects/github.com/szl-holdings/szl-pin/badge)](https://scorecard.dev/viewer/?uri=github.com/szl-holdings/szl-pin)
 
 One hash commits to a supplied frontier snapshot. `pin_estate` takes unique
 repository names and full head SHAs and produces a single `estate_hash` — same
