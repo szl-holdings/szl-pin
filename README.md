@@ -1,5 +1,7 @@
 # szl-pin
 
+[![PyPI](https://img.shields.io/pypi/v/szl-pin)](https://pypi.org/project/szl-pin/) [![Python](https://img.shields.io/pypi/pyversions/szl-pin)](https://pypi.org/project/szl-pin/)
+
 One hash commits to a supplied frontier snapshot. `pin_estate` takes unique
 repository names and full head SHAs and produces a single `estate_hash` — same
 pairs, same hash, any machine, order-independent and offline-verifiable.
