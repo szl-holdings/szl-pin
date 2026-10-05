@@ -1,6 +1,8 @@
 """Contract tests for deterministic, self-verifying estate pins."""
 from copy import deepcopy
 
+import pytest
+
 from szl_pin import pin_diff, pin_estate
 
 H = lambda c: c * 40
@@ -98,3 +100,35 @@ def test_diff_rejects_schema_drift_and_unexpected_entry_fields():
     extra_field = deepcopy(pin)
     extra_field["entries"][0]["claim"] = "healthy"
     assert pin_diff(extra_field, pin)["state"] == "INVALID"
+
+
+@pytest.mark.parametrize(
+    ("repos", "declared_count"),
+    [
+        ([], False),
+        ([], 0.0),
+        ([("repo", H("a"))], True),
+        ([("repo", H("a"))], 1.0),
+        (V1, 3.0),
+        ([], "0"),
+        ([], None),
+        ([], -1),
+    ],
+)
+@pytest.mark.parametrize("invalid_side", ["A", "B"])
+def test_diff_rejects_non_integer_repository_counts(repos, declared_count, invalid_side):
+    pin = pin_estate(repos)
+    malformed = deepcopy(pin)
+    malformed["pinned_repos"] = declared_count
+    result = pin_diff(malformed, pin) if invalid_side == "A" else pin_diff(pin, malformed)
+    assert result["state"] == "INVALID"
+    assert result["detail"].startswith(f"pin {invalid_side}: pinned_repos")
+
+
+@pytest.mark.parametrize("repos", [[], [("repo", H("a"))], V1])
+def test_diff_accepts_valid_integer_repository_counts(repos):
+    pin = pin_estate(repos)
+    assert type(pin["pinned_repos"]) is int
+    result = pin_diff(pin, deepcopy(pin))
+    assert result["state"] == "MEASURED"
+    assert result["same"] is True

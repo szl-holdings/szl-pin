@@ -106,7 +106,11 @@ def _validated_pin(
         return None, error
     assert entries is not None
 
-    if pin.get("pinned_repos") != len(entries):
+    declared_count = pin.get("pinned_repos")
+    # Python equality treats booleans and equal-valued floats as integers.
+    if type(declared_count) is not int or declared_count < 0:
+        return None, "pinned_repos must be a non-negative integer"
+    if declared_count != len(entries):
         return None, "pinned_repos does not match entries"
 
     claimed_hash = pin.get("estate_hash")
