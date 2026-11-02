@@ -180,9 +180,19 @@ def pin_diff(pin_a: Dict[str, Any], pin_b: Dict[str, Any]) -> Dict[str, Any]:
     }
 
 
+def _unique_json_object(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
+    """Reject ambiguity before JSON decoding discards repeated object keys."""
+    result: dict[str, Any] = {}
+    for key, value in pairs:
+        if key in result:
+            raise ValueError(f"duplicate JSON key: {key!r}")
+        result[key] = value
+    return result
+
+
 def _load_pin(path: str) -> Dict[str, Any]:
     with open(path, "r", encoding="utf-8") as handle:
-        value = json.load(handle)
+        value = json.load(handle, object_pairs_hook=_unique_json_object)
     if not isinstance(value, dict):
         raise ValueError("pin file must contain a JSON object")
     return value
