@@ -43,6 +43,10 @@ def _valid_sha(sha: object, length: int) -> bool:
 def _canonical_entries(
     repos: Iterable[Tuple[str, str]],
 ) -> tuple[List[Dict[str, str]] | None, str | None]:
+    # These containers iterate characters, bytes, or mapping keys, not pairs.
+    # Empty malformed input must not be accepted as a measured empty census.
+    if isinstance(repos, (str, bytes, bytearray, Mapping)):
+        return None, "repos must be an iterable of (repo, head) pairs"
     entries: List[Dict[str, str]] = []
     seen: set[str] = set()
     try:
