@@ -3,4 +3,4 @@
 from .pin import pin_diff, pin_estate
 
 __all__ = ["pin_diff", "pin_estate"]
-__version__ = "0.1.0"
+__version__ = "0.1.2"
